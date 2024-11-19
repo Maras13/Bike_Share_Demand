@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 def load_data(filepath: str) -> pd.DataFrame:
     """Loads data from a CSV file into a pandas DataFrame."""
-    df = pd.read_csv(filepath)
+    df = pd.read_csv(filepath,  parse_dates=True)
     return df
 
 def correlation(df: pd.DataFrame, drop_columns=None, save_path="correlation.png", title="Correlation Heatmap", cmap="coolwarm", annot=True):
