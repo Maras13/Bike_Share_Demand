@@ -3,6 +3,13 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+
+
+def load_data(filepath: str) -> pd.DataFrame:
+    """Loads data from a CSV file into a pandas DataFrame."""
+    df = pd.read_csv(filepath)
+    return df
+
 def correlation(df: pd.DataFrame, drop_columns=None, save_path="correlation.png", title="Correlation Heatmap", cmap="coolwarm", annot=True):
     """Generate and save a correlation heatmap."""
     if drop_columns:
