@@ -1,7 +1,7 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from utils import correlation, plot_num_feat, extract_day_time_fe, plot_rolling_median, plotting, plot_yearly_user_activity
+from utils import correlation, plot_num_feat, extract_day_time_fe, plot_rolling_median, plotting, plot_yearly_user_activity, load_data
 
 # Load dataset
 df = pd.read_csv('data/train.csv', parse_dates=True)
