@@ -10,14 +10,13 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import PoissonRegressor
-import catboost
 
 
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
 
 
-import shap
+
 from sklearn.metrics import mean_squared_error, mean_absolute_error, mean_squared_log_error
 from sklearn.metrics import r2_score
 from sklearn.ensemble import RandomForestRegressor
@@ -47,8 +46,17 @@ from utils import  extract_day_time_fe,  load_data
 import pickle
 
 
-#------------------------------------
+import mlflow
+import mlflow.sklearn
 
+import logging
+
+
+#--------------------------------------
+
+logging.basicConfig(level=logging.DEBUG)
+
+mlflow.set_tracking_uri("file:./mlruns")
 
 
 X_train_fe = pd.read_csv('./data/X_train_fe.csv')
@@ -120,21 +128,38 @@ def train_model(X_train_fe, y_train, X_test_fe, y_test):
   
     
     results = {}
+    mlflow.set_experiment("Model Training Experiment")
     
     for model_name, model_info in model_params.items():
+         with mlflow.start_run(run_name=model_name):
         
-        grid_search = GridSearchCV(model_info["model"], model_info["params"], cv=3, scoring='r2', n_jobs=-1)
-        grid_search.fit(X_train_fe, y_train)
-       
-        results[model_name] = {
-            "best_model": grid_search.best_estimator_,
-            "best_score": grid_search.best_score_,
-            "best_params": grid_search.best_params_
-        }
+            grid_search = GridSearchCV(model_info["model"], model_info["params"], cv=3, scoring='r2', n_jobs=-1)
+            grid_search.fit(X_train_fe, y_train)
 
-    best_model = grid_search.best_estimator_
-    with open('best_model.pkl', 'wb') as f:
-        pickle.dump(best_model, f)
+
+            best_model = grid_search.best_estimator_
+            best_score = grid_search.best_score_
+            best_params = grid_search.best_params_
+        
+            results[model_name] = {
+                "best_model": grid_search.best_estimator_,
+                "best_score": grid_search.best_score_,
+                "best_params": grid_search.best_params_
+            }
+
+              # Log metrics, parameters, and model to MLflow
+            mlflow.log_params(best_params)
+            mlflow.log_metric("best_r2_score", best_score)
+            mlflow.sklearn.log_model(best_model, "model")
+
+                   # Log additional metrics on test set
+            y_test_pred = best_model.predict(X_test_fe)
+            test_r2_score = r2_score(y_test, y_test_pred)
+            mlflow.log_metric("test_r2_score", test_r2_score)
+
+
+            with open('best_model.pkl', 'wb') as f:
+                pickle.dump(best_model, f)
 
         
         
