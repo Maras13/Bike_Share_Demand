@@ -2,4 +2,4 @@
 
 
 
-#Deploy it to AWS SageMaker
+- Deploy it to AWS SageMaker
