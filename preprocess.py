@@ -127,3 +127,6 @@ X_test_fe = feature_transform.transform(X_test)
 
 X_train_fe.to_csv('./data/X_train_fe.csv', index=False)
 X_test_fe.to_csv('./data/X_test_fe.csv', index=False)
+
+np.save('./data/y_train.npy', y_train)
+np.save('./data/y_test.npy', y_test)

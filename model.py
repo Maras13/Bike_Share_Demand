@@ -44,6 +44,9 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from utils import  extract_day_time_fe,  load_data
 
 
+import pickle
+
+
 #------------------------------------
 
 
@@ -51,7 +54,8 @@ from utils import  extract_day_time_fe,  load_data
 X_train_fe = pd.read_csv('./data/X_train_fe.csv')
 X_test_fe = pd.read_csv('./data/X_test_fe.csv')
 
-
+y_train = np.load('./data/y_train.npy')
+y_test = np.load('./data/y_test.npy')
 
 def train_model(X_train_fe, y_train, X_test_fe, y_test):
     
@@ -127,6 +131,11 @@ def train_model(X_train_fe, y_train, X_test_fe, y_test):
             "best_score": grid_search.best_score_,
             "best_params": grid_search.best_params_
         }
+
+    best_model = grid_search.best_estimator_
+    with open('best_model.pkl', 'wb') as f:
+        pickle.dump(best_model, f)
+
         
         
         
@@ -134,3 +143,4 @@ def train_model(X_train_fe, y_train, X_test_fe, y_test):
 
 
 results = train_model(X_train_fe, y_train, X_test_fe, y_test)
+
