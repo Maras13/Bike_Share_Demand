@@ -2,30 +2,14 @@ import pandas as pd
 import numpy as np
 
 import seaborn as sns
-sns.set_theme(style="ticks")
+
 
 import matplotlib.pyplot as plt
 
 
-from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import PoissonRegressor
-import catboost
-
-
 from sklearn.preprocessing import PolynomialFeatures
-from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
-
-
-import shap
-from sklearn.metrics import mean_squared_error, mean_absolute_error, mean_squared_log_error
-from sklearn.metrics import r2_score
-from sklearn.ensemble import RandomForestRegressor
-
-
 from sklearn.compose import ColumnTransformer
-from sklearn.ensemble import HistGradientBoostingRegressor
-from sklearn.model_selection import cross_validate
 from sklearn.pipeline import make_pipeline
 
 
@@ -38,9 +22,10 @@ from sklearn.preprocessing import KBinsDiscretizer
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.base import BaseEstimator, TransformerMixin
 
-from sklearn.model_selection import GridSearchCV
+
 from sklearn import set_config
 set_config(transform_output="pandas")
+
 from utils import  extract_day_time_fe,  load_data
 
 
@@ -139,3 +124,6 @@ feature_transform.fit(X_train)
 
 X_train_fe = feature_transform.transform(X_train)  
 X_test_fe = feature_transform.transform(X_test)
+
+X_train_fe.to_csv('X_train_fe.csv', index=False)
+X_test_fe.to_csv('X_test_fe.csv', index=False)

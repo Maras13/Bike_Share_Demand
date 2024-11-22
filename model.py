@@ -46,6 +46,13 @@ from utils import  extract_day_time_fe,  load_data
 
 #------------------------------------
 
+
+
+X_train_fe = pd.read_csv('X_train_fe.csv')
+X_test_fe = pd.read_csv('X_test_fe.csv')
+
+
+
 def train_model(X_train_fe, y_train, X_test_fe, y_test):
     
     model_params = {
