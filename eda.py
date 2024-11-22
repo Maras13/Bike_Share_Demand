@@ -2,11 +2,14 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from utils import correlation, plot_num_feat, extract_day_time_fe, plot_rolling_median, plotting, plot_yearly_user_activity, load_data
+# Call the functions from utils.py
+
+
 
 # Load dataset
 df = load_data(filepath = 'data/train.csv')
 
-# Call the functions from utils.py
+
 
 # Correlation heatmap
 correlation_matrix = correlation(
