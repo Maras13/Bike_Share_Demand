@@ -125,5 +125,5 @@ feature_transform.fit(X_train)
 X_train_fe = feature_transform.transform(X_train)  
 X_test_fe = feature_transform.transform(X_test)
 
-X_train_fe.to_csv('X_train_fe.csv', index=False)
-X_test_fe.to_csv('X_test_fe.csv', index=False)
+X_train_fe.to_csv('./data/X_train_fe.csv', index=False)
+X_test_fe.to_csv('./data/X_test_fe.csv', index=False)

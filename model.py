@@ -48,8 +48,8 @@ from utils import  extract_day_time_fe,  load_data
 
 
 
-X_train_fe = pd.read_csv('X_train_fe.csv')
-X_test_fe = pd.read_csv('X_test_fe.csv')
+X_train_fe = pd.read_csv('./data/X_train_fe.csv')
+X_test_fe = pd.read_csv('./data/X_test_fe.csv')
 
 
 
