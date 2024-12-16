@@ -168,3 +168,5 @@ cython_debug/
 #MLruns
 
 mlruns/
+**/model.pkl
+**/mlruns
