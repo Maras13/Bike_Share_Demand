@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/saramaras/Documents/github/Bike_Share_Demand/mlruns/749123709810171968/77617ce431b649f7adbddecf20774663/artifacts
+end_time: 1734356328913
+entry_point_name: ''
+experiment_id: '749123709810171968'
+lifecycle_stage: active
+run_id: 77617ce431b649f7adbddecf20774663
+run_name: LinearRegression
+run_uuid: 77617ce431b649f7adbddecf20774663
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1734356325192
+status: 4
+tags: []
+user_id: saramaras

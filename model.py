@@ -42,6 +42,9 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.base import BaseEstimator, TransformerMixin
 from utils import  extract_day_time_fe,  load_data
 
+from sklearn.model_selection import learning_curve
+import numpy as np
+
 
 import pickle
 
@@ -64,6 +67,36 @@ X_test_fe = pd.read_csv('./data/X_test_fe.csv')
 
 y_train = np.load('./data/y_train.npy')
 y_test = np.load('./data/y_test.npy')
+
+
+
+def plot_performance(y_true, y_pred, model_name, save_path="predicted_vs_actual.png"):
+   
+    # Create the figure and axis
+    plt.figure(figsize=(10, 6))
+
+    # Plot the Actual Values (using a scatter plot)
+    plt.scatter(range(len(y_true)), y_true, label='Actual Values', color='blue', alpha=0.6)
+
+    # Plot the Predicted Values (using a scatter plot)
+    plt.scatter(range(len(y_pred)), y_pred, label='Predicted Values', color='orange', alpha=0.6)
+
+    # Add title and labels
+    plt.title(f"Actual, Predicted Values - {model_name}")
+    plt.xlabel("Sample Index")
+    plt.ylabel("Values")
+
+    # Add a legend
+    plt.legend(loc="best")
+
+    # Save or show the plot
+    if save_path:
+        plt.savefig(save_path, dpi=300, bbox_inches="tight")
+    plt.show()
+
+
+
+
 
 def train_model(X_train_fe, y_train, X_test_fe, y_test):
     
@@ -152,10 +185,19 @@ def train_model(X_train_fe, y_train, X_test_fe, y_test):
             mlflow.log_metric("best_r2_score", best_score)
             mlflow.sklearn.log_model(best_model, "model")
 
+
+              # Log additional metrics on test set
+            y_test_pred = best_model.predict(X_test_fe)
+            test_metrics = evaluate_model(y_test, y_test_pred)
+            for metric_name, metric_value in test_metrics.items():
+                mlflow.log_metric(metric_name, metric_value)
+
                    # Log additional metrics on test set
             y_test_pred = best_model.predict(X_test_fe)
             test_r2_score = r2_score(y_test, y_test_pred)
             mlflow.log_metric("test_r2_score", test_r2_score)
+
+           
 
 
             with open('best_model.pkl', 'wb') as f:
@@ -164,8 +206,52 @@ def train_model(X_train_fe, y_train, X_test_fe, y_test):
         
         
         
-    return results
+    return results, y_test_pred
 
 
-results = train_model(X_train_fe, y_train, X_test_fe, y_test)
+results,  y_test_pred = train_model(X_train_fe, y_train, X_test_fe, y_test)
+
+
+
+
+plot_performance(y_test, y_test_pred, model_name="RandomForestRegressor", save_path="model_performance.png")
+
+
+#-------------
+def plot_residuals_distribution(y_train, y_pred, model_name, save_path=None):
+    residuals = y_train - y_pred
+    
+    plt.figure(figsize=(8, 6))
+    sns.histplot(residuals, kde=True, color='purple', bins=30)
+    
+    plt.title(f"Residuals Distribution - {model_name}")
+    plt.xlabel("Residuals")
+    plt.ylabel("Frequency")
+    
+    if save_path:
+        plt.savefig(save_path, dpi=300, bbox_inches="tight")
+    plt.show()
+
+
+plot_residuals_distribution(y_test, y_test_pred, model_name="RandomForestRegressor", save_path="residual_distribution.png")
+
+def plot_model_comparison(results, metric='best_score', save_path=None):
+    model_names = list(results.keys())
+    scores = [results[model]['best_score'] for model in model_names]
+    
+    plt.figure(figsize=(10, 6))
+    sns.barplot(x=model_names, y=scores, palette='viridis')
+    plt.title(f"Model Comparison - {metric}")
+    plt.ylabel(metric)
+    plt.xticks(rotation=45, fontsize=8)
+    
+    if save_path:
+        plt.savefig(save_path, dpi=300, bbox_inches="tight")
+    plt.show()
+
+
+plot_model_comparison(results, metric='best_score', save_path="best_score.png")
+
+
+
 

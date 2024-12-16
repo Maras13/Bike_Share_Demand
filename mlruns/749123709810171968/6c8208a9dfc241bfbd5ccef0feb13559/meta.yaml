@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/saramaras/Documents/github/Bike_Share_Demand/mlruns/749123709810171968/6c8208a9dfc241bfbd5ccef0feb13559/artifacts
+end_time: 1734358468774
+entry_point_name: ''
+experiment_id: '749123709810171968'
+lifecycle_stage: active
+run_id: 6c8208a9dfc241bfbd5ccef0feb13559
+run_name: RandomForestRegressor
+run_uuid: 6c8208a9dfc241bfbd5ccef0feb13559
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1734358420506
+status: 3
+tags: []
+user_id: saramaras

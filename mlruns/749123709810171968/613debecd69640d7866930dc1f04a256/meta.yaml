@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/saramaras/Documents/github/Bike_Share_Demand/mlruns/749123709810171968/613debecd69640d7866930dc1f04a256/artifacts
+end_time: 1734357519616
+entry_point_name: ''
+experiment_id: '749123709810171968'
+lifecycle_stage: active
+run_id: 613debecd69640d7866930dc1f04a256
+run_name: PoissonRegressor
+run_uuid: 613debecd69640d7866930dc1f04a256
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1734357516147
+status: 3
+tags: []
+user_id: saramaras

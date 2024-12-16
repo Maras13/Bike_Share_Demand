@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/saramaras/Documents/github/Bike_Share_Demand/mlruns/749123709810171968/992d66ea85d846a3809f72e47b37de1b/artifacts
+end_time: 1734357632614
+entry_point_name: ''
+experiment_id: '749123709810171968'
+lifecycle_stage: active
+run_id: 992d66ea85d846a3809f72e47b37de1b
+run_name: HistGradientBoostingRegressor
+run_uuid: 992d66ea85d846a3809f72e47b37de1b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1734357628583
+status: 3
+tags: []
+user_id: saramaras

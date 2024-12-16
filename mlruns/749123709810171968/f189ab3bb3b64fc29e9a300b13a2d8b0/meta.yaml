@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/saramaras/Documents/github/Bike_Share_Demand/mlruns/749123709810171968/f189ab3bb3b64fc29e9a300b13a2d8b0/artifacts
+end_time: 1734356647893
+entry_point_name: ''
+experiment_id: '749123709810171968'
+lifecycle_stage: active
+run_id: f189ab3bb3b64fc29e9a300b13a2d8b0
+run_name: Ridge
+run_uuid: f189ab3bb3b64fc29e9a300b13a2d8b0
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1734356646647
+status: 3
+tags: []
+user_id: saramaras
