@@ -59,7 +59,7 @@ def correlation(df, drop_columns=None, save_path="correlation.png", title="Corre
     plt.close()
     return corr_matrix
 
-def plot_num_feat(df, columns=None, fig_size=(15, 6), colors=None, save_plots=False):
+def plot_num_feat(df, columns=None, fig_size=(15, 6), colors=None, save_path="num_features.png"):
     
     if columns is None:
         columns = df.select_dtypes(include=['number']).columns
@@ -86,13 +86,11 @@ def plot_num_feat(df, columns=None, fig_size=(15, 6), colors=None, save_plots=Fa
         ax.set_title(f"Distribution: {column}", fontsize=14, pad=10)
         ax.set_xlabel(column, fontsize=12)
         ax.set_ylabel("Frequency", fontsize=12)
-
-    plt.tight_layout()
-    if save_plots:
-        for column in columns:
-            plt.savefig(f"{column}_distribution.png", dpi=300)
+    # Save or show the plot
+    if save_path:
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
     plt.show()
-
+    plt.close()
 
 
 
@@ -171,10 +169,15 @@ def plotting(df: pd.DataFrame, column='datetime_year', save_path="total_yearly.p
     plt.show()
 
 
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 def plot_yearly_user_activity(df, year_column='datetime_year', month_column='datetime_month', 
-                              registered_col='registered', casual_col='casual', holiday_col='holiday'):
+                              registered_col='registered', casual_col='casual', holiday_col='holiday', save_path="yearly_user_activity.png"):
 
     years = df[year_column].unique()
+    
+    # Loop through each year and create plots
     for year in years:
         df_year = df[df[year_column] == year]
 
@@ -197,11 +200,19 @@ def plot_yearly_user_activity(df, year_column='datetime_year', month_column='dat
             ax.grid(visible=True, linestyle='--', linewidth=0.5, alpha=0.7)
             sns.despine()
 
+        # Save and show the plot for the current year
         plt.tight_layout()
-        plt.show()
+        if save_path:
+            plt.savefig(f"{save_path}_{year}.png", dpi=300, bbox_inches='tight')  # Save with year in filename
+            plt.close(fig)  # Close the figure to avoid memory issues
+
+    # If you want to display all plots at once (after loop finishes)
+    plt.show()
 
 
-def plot_line_with_legend(df, x, y, hue, title, xlabel, ylabel, save_path=None, figsize=(12, 6)):
+
+
+def plot_line_with_legend(df, x, y, hue, title, xlabel, ylabel, save_path=True, figsize=(12, 6)):
     """Create a polished line plot with a detailed legend."""
     plt.figure(figsize=figsize)
 
@@ -226,7 +237,7 @@ def plot_line_with_legend(df, x, y, hue, title, xlabel, ylabel, save_path=None, 
 
 
 
-def plot_hue_subplots(df, x, y, hues, figsize=(15, 10), sharex=True, palette="Set2", markers="o", save_path=None):
+def plot_hue_subplots(df, x, y, hues, figsize=(15, 10), sharex=True, palette="Set2", markers="o", save_path="hue_subplots.png"):
    
     # Create subplots: one for each hue
     fig, axes = plt.subplots(len(hues), 1, figsize=figsize, sharex=sharex)
