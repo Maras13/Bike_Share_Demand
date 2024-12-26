@@ -169,8 +169,6 @@ def plotting(df: pd.DataFrame, column='datetime_year', save_path="total_yearly.p
     plt.show()
 
 
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 def plot_yearly_user_activity(df, year_column='datetime_year', month_column='datetime_month', 
                               registered_col='registered', casual_col='casual', holiday_col='holiday', save_path="yearly_user_activity.png"):

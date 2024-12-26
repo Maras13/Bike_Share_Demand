@@ -46,7 +46,7 @@ from sklearn.model_selection import learning_curve
 import numpy as np
 
 
-import pickle
+import joblib
 
 
 import mlflow
@@ -68,6 +68,30 @@ X_test_fe = pd.read_csv('./data/X_test_fe.csv')
 y_train = np.load('./data/y_train.npy')
 y_test = np.load('./data/y_test.npy')
 
+def evaluate_model(y_true, y_pred):
+    """
+    Evaluate the model using multiple regression metrics.
+
+    Parameters:
+    - y_true: True labels of the test set.
+    - y_pred: Predicted values from the model.
+
+    Returns:
+    - A dictionary containing evaluation metrics.
+    """
+    # Calculate evaluation metrics
+    mae = mean_absolute_error(y_true, y_pred)
+    mse = mean_squared_error(y_true, y_pred)
+    rmse = np.sqrt(mse)
+    r2 = r2_score(y_true, y_pred)
+
+    # Return all metrics as a dictionary
+    return {
+        "MAE": mae,
+        "MSE": mse,
+        "RMSE": rmse,
+        "R2": r2
+    }
 
 
 def plot_performance(y_true, y_pred, model_name, save_path="predicted_vs_actual.png"):
@@ -199,9 +223,8 @@ def train_model(X_train_fe, y_train, X_test_fe, y_test):
 
            
 
+            joblib.dump(best_model, 'best_model.pkl')
 
-            with open('best_model.pkl', 'wb') as f:
-                pickle.dump(best_model, f)
 
         
         

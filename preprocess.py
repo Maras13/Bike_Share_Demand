@@ -22,6 +22,8 @@ from sklearn.preprocessing import KBinsDiscretizer
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.base import BaseEstimator, TransformerMixin
 
+import joblib
+
 
 from sklearn import set_config
 set_config(transform_output="pandas")
@@ -120,7 +122,9 @@ feature_transform = ColumnTransformer(
 )
 
 
-feature_transform.fit(X_train)  
+feature_transform=feature_transform.fit(X_train)  
+
+joblib.dump(feature_transform, './model/feature_transform.pkl')
 
 X_train_fe = feature_transform.transform(X_train)  
 X_test_fe = feature_transform.transform(X_test)
